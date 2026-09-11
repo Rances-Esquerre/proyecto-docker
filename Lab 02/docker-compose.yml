@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  api:
+  build: ./api
+  deploy:
+    replicas: 3
+  ports:
+    - "3000-3002:3000"
+  
+  bd:
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - data_bd:/var/lib/postgresql/data
+volumes:
+  data_bd:
